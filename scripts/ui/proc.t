@@ -74,6 +74,7 @@ function Proc:kill()
   self._co = nil
   self._parent:_remove_child(self)
   self._children = nil
+  self._persist = false
 end
 
 -- whether the proc is alive
@@ -81,15 +82,34 @@ function Proc:alive()
   return self._persist or (self._co and coroutine.status(self._co) ~= "dead")
 end
 
+-- dispatch a single event or timeout
+function Proc:_dispatch_event(t)
+  local evtargs
+  if self._events:length() > 0 then
+    evtargs = self._events:pop_left()
+  elseif self._timeout and t > self._timeout
+    evtargs = {"timeout"}
+  else
+    return false
+  end
+  self._timeout = nil
+
+  local happy, errmsg = coroutine.resume(self._co, unpack(evtargs))
+  if not happy then
+    self._co = nil
+    log.error("Proc error: " .. tostring(errmsg))
+    return false
+  end
+
+  return true
+end
+
 -- internal tick function
 function Proc:_tick(t, dt)
-  if self._co and
-    (self._events:length() > 0 or (self._timeout and t > self._timeout)) then
-    self._timeout = nil -- clear timeout first because co might reset it
-    local happy, errmsg = coroutine.resume(self._co, t, dt)
-    if not happy then
-      self._co = nil
-      log.error("Proc error: " .. tostring(errmsg))
+  if self._co then
+    local more_events = self:_dispatch_event(t)
+    while more_events do
+      more_events = self:_dispatch_event(t)
     end
   end
 
