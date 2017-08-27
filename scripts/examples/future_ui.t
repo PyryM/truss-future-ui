@@ -20,6 +20,7 @@ local style = {
 function nanovg_setup(stage, ctx)
   style.colors.background = ctx:RGBAf(0.0, 0.0, 0.0, 0.5) -- semi-transparent black
   style.colors.font = ctx:RGBf(1.0, 1.0, 1.0)     -- white
+  style.colors.foreground = style.colors.font
   style.colors.highlight = ctx:RGBAf(0.6, 0.0, 0.0, 0.5)
   ctx:load_font("font/VeraMono.ttf", "sans")
 end
@@ -64,6 +65,10 @@ function init()
   button2:on("click", proc_root, function(self, etype, evt)
     print("Button2 was clicked! " .. evt.x .. ", " .. evt.y)
   end)
+
+  local checkbox = proc_root:spawn_child(button.checkbox, 
+                                        {x = 50, y = 170,
+                                         width = 20, height = 20})
 end
 
 function update()
