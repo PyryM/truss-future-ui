@@ -74,6 +74,7 @@ function m.button(proc, options)
     options.bounds = {x = options.x, y = options.y,
                       width = options.width, height = options.height}
   end
+  proc.props = options
 
   -- setup
   local state = button_normal_state
@@ -128,6 +129,7 @@ function m.checkbox(proc, options)
     options.bounds = {x = options.x, y = options.y,
                       width = options.width, height = options.height}
   end
+  proc.props = options
 
   -- setup
   local state = button_normal_state
@@ -154,6 +156,7 @@ function m.brut_button(proc, options)
     options.bounds = {x = options.x, y = options.y,
                       width = options.width, height = options.height}
   end
+  proc.props = options
 
   -- setup
   local cb = proc:callback()

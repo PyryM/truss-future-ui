@@ -62,8 +62,11 @@ function init()
   local button2 = proc_root:spawn_child(button.brut_button, 
                                        {x = 50, y = 110, text = "brut_button", 
                                        width = 150, height = 50})
+  local ntimes = 0
   button2:on("click", proc_root, function(self, etype, evt)
     print("Button2 was clicked! " .. evt.x .. ", " .. evt.y)
+    ntimes = ntimes + 1
+    button2.props.text = "Clicked " .. ntimes
   end)
 
   local checkbox = proc_root:spawn_child(button.checkbox, 
