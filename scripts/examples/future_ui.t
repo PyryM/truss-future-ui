@@ -53,13 +53,13 @@ function init()
   proc_root.style = style
   proc_root.input = myapp.ECS.systems.input
   local button1 = proc_root:spawn_child(button.button, 
-                                      {x = 50, y = 50, text = "Click me!", 
+                                      {x = 50, y = 50, text = "button", 
                                        width = 150, height = 50})
   button1:on("click", proc_root, function(self, etype, evt)
     print("Button was clicked! " .. evt.x .. ", " .. evt.y)
   end)
-  local button2 = proc_root:spawn_child(button.button, 
-                                       {x = 50, y = 110, text = "Me too!", 
+  local button2 = proc_root:spawn_child(button.brut_button, 
+                                       {x = 50, y = 110, text = "brut_button", 
                                        width = 150, height = 50})
   button2:on("click", proc_root, function(self, etype, evt)
     print("Button2 was clicked! " .. evt.x .. ", " .. evt.y)

@@ -95,14 +95,18 @@ end
 
 -- a 'brutalist' button
 function m.brut_button(proc, options)
+  if not options.bounds then
+    options.bounds = {x = options.x, y = options.y,
+                      width = options.width, height = options.height}
+  end
+
   -- setup
-  local props = options
   local cb = proc:callback()
   proc.root.input:on("mousemove", cb, cb.call)
   proc.root.input:on("mousedown", cb, cb.call)
   local draw = options.draw or draw_button
   proc.tick = function(self, t, dt)
-    draw(self, props, t, dt)
+    draw(self, options, t, dt)
   end
 
   -- main loop
@@ -110,12 +114,14 @@ function m.brut_button(proc, options)
   while true do
     local etype, evt = cb:wait_result()
     if etype == "mousemove" then
-      in_region = in_rectangle(evt.x, evt.y, props.bounds)
-      if in_region then props.state = "hover" else props.state = "normal" end
+      in_region = in_rectangle(evt.x, evt.y, options.bounds)
+      if in_region then options.state = "hover" else options.state = "normal" end
     elseif etype == "mousedown" then
       if in_region then 
-        props.state = "held"
-        proc:emit("click", evt) 
+        options.state = "held"
+        proc:emit("click", evt)
+        for i = 1,5 do proc:wait_frame() end
+        options.state = "hover"
       end
     end
   end

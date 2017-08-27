@@ -119,6 +119,11 @@ function Proc:_yield(cb, timeout)
   return coroutine.yield()
 end
 
+-- wait one frame/tick
+function Proc:wait_frame()
+  self:_yield(nil, nil)
+end
+
 function Proc:_resume(cb, ...)
   if cb ~= self._cb then
     truss.error("Tried to resume from wrong callback!")
