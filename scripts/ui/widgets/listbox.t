@@ -33,6 +33,8 @@ local function draw_listbox(proc, props, t, dt)
     if not text then break end
     if idx == props.selection_index then
       nvg:FillColor(colors.font)
+    elseif idx == props.hover_index then
+      nvg:FillColor(colors.hover)
     else
       nvg:FillColor(colors.background)
     end

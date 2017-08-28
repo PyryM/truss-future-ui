@@ -23,6 +23,7 @@ function nanovg_setup(stage, ctx)
   style.colors.font = ctx:RGBf(1.0, 1.0, 1.0)     -- white
   style.colors.foreground = style.colors.font
   style.colors.highlight = ctx:RGBAf(0.6, 0.0, 0.0, 0.5)
+  style.colors.hover = ctx:RGBAf(0.6, 0.6, 0.6, 0.5)
   ctx:load_font("font/VeraMono.ttf", "sans")
 end
 
@@ -76,7 +77,10 @@ function init()
 
   local listbox = proc_root:spawn_child(listbox.listbox,
                 {x = 50, y = 230, width = 150, height = 150,
-                 num_items = 6, items = {{"hey"}, {"boo"}, {"yay"}}})
+                 num_items = 6, items = {{"fullscreen"}, 
+                                         {"1280x720"},
+                                         {"800x600"},
+                                         {"640x480"}}})
 end
 
 function update()
