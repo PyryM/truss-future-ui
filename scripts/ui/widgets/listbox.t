@@ -8,6 +8,7 @@
 local m = {}
 
 local in_rectangle = require("ui/utils.t").in_rectangle
+local infer_bounds = require("ui/utils.t").infer_bounds
 
 local function draw_listbox(proc, props, t, dt)
   local nvg = proc.root.nvg_context
@@ -45,10 +46,7 @@ end
 
 -- 
 function m.listbox(proc, options)
-  if not options.bounds then
-    options.bounds = {x = options.x, y = options.y,
-                      width = options.width, height = options.height}
-  end
+  infer_bounds(options)
   proc.props = options
   options.selection_index = 1
   options.page_offset = 0

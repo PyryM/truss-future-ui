@@ -11,6 +11,7 @@ local grid = require("graphics/grid.t")
 local proc = require("ui/proc.t")
 local button = require("ui/widgets/button.t")
 local listbox = require("ui/widgets/listbox.t")
+local label = require("ui/widgets/label.t")
 
 local style = {
   colors = {},
@@ -72,8 +73,16 @@ function init()
   end)
 
   local checkbox = proc_root:spawn_child(button.checkbox, 
-                                        {x = 50, y = 170,
+                                        {x = 55, y = 175,
                                          width = 20, height = 20})
+
+  local frame = proc_root:spawn_child(label.frame, 
+                                      {x = 50, y = 170, 
+                                      width = 150, height = 30})
+  local label = proc_root:spawn_child(label.label,
+                                      {x = 82, y = 170,
+                                       width = 70, height = 30,
+                                       text = "Enable"})
 
   local listbox = proc_root:spawn_child(listbox.listbox,
                 {x = 50, y = 230, width = 150, height = 150,

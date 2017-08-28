@@ -5,6 +5,7 @@
 local m = {}
 
 local in_rectangle = require("ui/utils.t").in_rectangle
+local infer_bounds = require("ui/utils.t").infer_bounds
 
 local button_normal_state, button_hover_state, button_down_state
 button_normal_state = function(proc, cb, props)
@@ -67,10 +68,7 @@ local function draw_button(proc, props, t, dt)
 end
 
 function m.button(proc, options)
-  if not options.bounds then
-    options.bounds = {x = options.x, y = options.y,
-                      width = options.width, height = options.height}
-  end
+  infer_bounds(options)
   proc.props = options
 
   -- setup
@@ -122,10 +120,7 @@ local function draw_checkbox(proc, props, t, dt)
 end
 
 function m.checkbox(proc, options)
-  if not options.bounds then
-    options.bounds = {x = options.x, y = options.y,
-                      width = options.width, height = options.height}
-  end
+  infer_bounds(options)
   proc.props = options
 
   -- setup
@@ -149,10 +144,7 @@ end
 
 -- a 'brutalist' button
 function m.brut_button(proc, options)
-  if not options.bounds then
-    options.bounds = {x = options.x, y = options.y,
-                      width = options.width, height = options.height}
-  end
+  infer_bounds(options)
   proc.props = options
 
   -- setup
