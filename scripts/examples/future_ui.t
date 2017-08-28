@@ -10,6 +10,7 @@ local orbitcam = require("gui/orbitcam.t")
 local grid = require("graphics/grid.t")
 local proc = require("ui/proc.t")
 local button = require("ui/widgets/button.t")
+local listbox = require("ui/widgets/listbox.t")
 
 local style = {
   colors = {},
@@ -72,6 +73,10 @@ function init()
   local checkbox = proc_root:spawn_child(button.checkbox, 
                                         {x = 50, y = 170,
                                          width = 20, height = 20})
+
+  local listbox = proc_root:spawn_child(listbox.listbox,
+                {x = 50, y = 230, width = 150, height = 150,
+                 num_items = 6, items = {{"hey"}, {"boo"}, {"yay"}}})
 end
 
 function update()

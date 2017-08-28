@@ -90,7 +90,8 @@ end
 function Proc:_tick(t, dt)
   if self._co then
     if not self._cb then
-      coroutine.resume(self._co, "tick", dt)
+      -- coroutine.resume(self._co, "tick", dt)
+      self:_raw_resume("tick", dt)
     elseif self._timeout and self._timeout <= 0.0 then
       self._cb:_timeout(t)
     elseif self._timeout then
@@ -124,6 +125,14 @@ function Proc:wait_frame()
   self:_yield(nil, nil)
 end
 
+function Proc:_raw_resume(...)
+  local happy, errmsg = coroutine.resume(self._co, ...)
+  if not happy then
+    self._co = nil
+    log.error("Proc error: " .. errmsg)
+  end
+end
+
 function Proc:_resume(cb, ...)
   if cb ~= self._cb then
     truss.error("Tried to resume from wrong callback!")
@@ -131,7 +140,8 @@ function Proc:_resume(cb, ...)
   end
   self._cb = nil
   self._timeout = nil
-  coroutine.resume(self._co, ...)
+  self:_raw_resume(...)
+  --coroutine.resume(self._co, ...)
 end
 
 function Proc:_add_child(child)

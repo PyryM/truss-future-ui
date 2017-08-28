@@ -4,10 +4,7 @@
 
 local m = {}
 
-local function in_rectangle(x, y, bounds)
-  return x > bounds.x and x < (bounds.x + bounds.width ) 
-     and y > bounds.y and y < (bounds.y + bounds.height)
-end
+local in_rectangle = require("ui/utils.t").in_rectangle
 
 local button_normal_state, button_hover_state, button_down_state
 button_normal_state = function(proc, cb, props)
